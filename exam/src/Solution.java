@@ -1,6 +1,12 @@
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
@@ -8,31 +14,33 @@ import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 
 public class Solution extends Application {
+
     public Stage window;
-    public Scene scene;
-    public Button button;
-    ListView<String> listView;
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("GGH");
-        button = new Button("Search");
+        Parent root = FXMLLoader.load(getClass().getResource("source.fxml"));
+        window.setTitle("Test");
+        Scene scene = new Scene(root);
 
-        listView = new ListView<>();
-        listView.getItems().addAll("a","b","c","d");
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        VBox layout = new VBox();
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        listView.setItems(items);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE  );
 
-        VBox layout = new VBox(10);
-        layout.setPadding(new Insets(20,20,20,20));
-        layout.getChildren().addAll(listView,button);
+        layout.getChildren().addAll(listView,label);
 
-        scene = new Scene(layout,300,300);
         window.setScene(scene);
         window.show();
     }
+
+    @FXML
+    public Label label = new Label();
+    public ListView<String> listView = new ListView<String>();
 }

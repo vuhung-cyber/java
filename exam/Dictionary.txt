@@ -1,0 +1,8 @@
+house	ngôi nhà
+mean	ý nghĩa
+awake	thức dậy
+allow	cho phép
+weak	yếu ớt
+bread	bánh mì	
+ring	nhẫn
+time	thời gian
