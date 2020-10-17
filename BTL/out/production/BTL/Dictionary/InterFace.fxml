@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Main">
+  <children>
+    <Button fx:id="buttonSearch" layoutX="500.0" layoutY="1.0" mnemonicParsing="false" onAction="#pressSearch" prefHeight="60.0" prefWidth="100.0" text="Search" />
+    <ListView fx:id="listView" layoutX="0.0" layoutY="61.0" prefHeight="539.0000999999975" prefWidth="201.0" />
+    <TextArea fx:id="textSearch" layoutX="0.0" layoutY="0.0" onKeyPressed="#searching" prefHeight="59.0" prefWidth="490.0000999999975" promptText="Search..." wrapText="true" />
+    <Label fx:id="label" layoutX="211.0" layoutY="60.0" prefHeight="535.0" prefWidth="389.0" text="" />
+  </children>
+</AnchorPane>
