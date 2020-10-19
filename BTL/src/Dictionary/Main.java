@@ -1,41 +1,57 @@
 package Dictionary;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class Main extends Application{
 
+public class Main extends Application implements Initializable {
     DictionaryCommandLine app = new DictionaryCommandLine();
-    @FXML
-    javafx.scene.control.TextArea textSearch = new javafx.scene.control.TextArea();
 
     @FXML
-    javafx.scene.control.Button buttonSearch = new javafx.scene.control.Button();
+    private ListView<String> wordView;
 
     @FXML
-    public ListView<String> listView = new ListView<String>();
+    private Button buttonSearch = new Button();
 
     @FXML
-    javafx.scene.control.Label label = new javafx.scene.control.Label();
+    private Label label = new Label();
+
+    @FXML
+    private TextField textSearch = new TextField();
+
+    @FXML
+    private Button add = new Button();
+
+    @FXML
+    private Button delete = new Button();
+
+    @FXML
+    private Button change = new Button();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        app.size.insertFromFile();
+    public void start(Stage primaryStage) throws Exception {
+        app.dicManage.insertFromFile();
         Parent root = FXMLLoader.load(getClass().getResource("InterFace.fxml"));
-        primaryStage.setTitle("GGH");
+        primaryStage.setTitle("Dictionary");
 
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
@@ -43,9 +59,30 @@ public class Main extends Application{
         launch(args);
     }
 
-    public void pressSearch() throws Exception {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            readWord();
+            wordView.setVisible(true);
+            getSelection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readWord() throws IOException {
+        ObservableList list = FXCollections.observableArrayList();
+        //app.dicManage.insertFromFile();
+        for (int i = 0; i < app.dicManage.dictionary.words.size(); i++) {
+            list.add(app.dicManage.dictionary.words.get(i).word_target);
+        }
+        wordView.getItems().addAll(list);
+    }
+
+    @FXML
+    void pressSearch() {
         String wordSearch = textSearch.getText();
-        String wordFound = app.size.dictionaryLookup(wordSearch);
+        String wordFound = app.dicManage.dictionaryLookup(wordSearch);
         showText(wordFound);
     }
 
@@ -53,36 +90,54 @@ public class Main extends Application{
         label.setText(s);
     }
 
-    public void readWord() throws Exception {
-        int count = app.size.insertFromFile();
-        ObservableList<String> list;
-        ArrayList<String> taget = new ArrayList<String>();
-        for(int i=0; i<count; i++) {
-            String s = app.size.addWord.words.get(i).word_target;
-            taget.add(s);
-            System.out.println(s);
-        }
-        list = FXCollections.observableList(taget);
-        listView.setItems(list);
-        listView.setVisible(true);
-    }
-
-    public void searching() {
-        textSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+    @FXML
+    void searching() {
+        textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!(newValue.trim().isEmpty())) {
-                ArrayList<String> lookuping = app.dictionaryLookuping(newValue);
-                if(lookuping.size() > 0) {
-                    ObservableList<String> temp = FXCollections.observableArrayList();
-                    for (int i=0; i<lookuping.size(); i++) {
-                        temp.add(lookuping.get(i));
+                ArrayList<String> lookUp = app.dictionarySearcher(newValue);
+                if (lookUp.size() > 0) {
+                    ObservableList<String> tmp = FXCollections.observableArrayList();
+                    for (int i = 0; i < lookUp.size(); i++) {
+                        tmp.addAll(lookUp.get(i));
                     }
-                    listView.setItems(temp);
-                    listView.setVisible(true);
+                    wordView.setItems(tmp);
                 }
             }
             else {
-                listView.setVisible(false);
+                try {
+                    readWord();
+                    showText("");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+    }
+
+    void selection() {
+        wordView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+    @FXML
+    void getSelection() {
+        //wordView.getSelectionModel().getSelectedItem();
+        wordView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println("ListView selection changed from oldValue = "
+                        + oldValue + " to newValue = " + newValue);
+                String wordSearchFromList = newValue;
+                String wordFoundFromSearch = app.dicManage.dictionaryLookup(wordSearchFromList);
+                showText(wordFoundFromSearch);
+                //textSearch.setText(newValue);
+            }
+        });
+    }
+
+
+    @FXML
+    void setButtonDelete() {
+        String wordSearch = textSearch.getText();
+        app.dicManage.dictionaryDelete(wordSearch);
     }
 }

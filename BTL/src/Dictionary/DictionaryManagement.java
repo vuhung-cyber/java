@@ -1,75 +1,97 @@
 package Dictionary;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class DictionaryManagement {
     Scanner scanner = new Scanner(System.in);
+    Dictionary dictionary = new Dictionary();
 
     static int sizeOfDictionary = 0;
-    Dictionary addWord = new Dictionary();
+    static boolean notAdd = true;
+    private final static String FILE_NAME = "Dictionary.txt";
 
-    private static String FILE_NAME = "Dictionary.txt";
 
+    // đọc từ bàn phím
     public void insertFromCommandline() {
         System.out.println("Size: ");
         sizeOfDictionary = scanner.nextInt();
         scanner.nextLine();
         for (int i = 0; i < sizeOfDictionary; i++) {
-            Word w = new Word();
-            w.word_target = scanner.nextLine(); //eng
-            w.word_explain = scanner.nextLine(); // vi
-
-            addWord.words.add(i, w);
+            dictionary.words.add(new Word(scanner.nextLine(), scanner.nextLine()));
         }
     }
 
-    public int insertFromFile() throws IOException {
-        File file = new File(FILE_NAME);
-        InputStream inputStream = new FileInputStream(file);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-
-        String line = "";
-        int i = 0;
-        while ((line = reader.readLine()) != null) {
-            int index = line.indexOf("\t");
-            Word w = new Word();
-            w.word_target = line.substring(0, index);
-            w.word_explain = line.substring(index+1);
-            addWord.words.add(i, w);
-            i++;
-            //System.out.println(w.word_explain + " " + w.word_target);
+    // đọc từ file
+    public void insertFromFile() {
+        try {
+            scanner = new Scanner(Paths.get(FILE_NAME), "UTF-8");
+            while (scanner.hasNextLine()) {
+                String str = scanner.nextLine();
+                String[] parts = str.split("\t");
+                dictionary.words.add(new Word(parts[0], parts[1]));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return i;
     }
 
-    /**
-     * Lookup and show to Lable.
-     */
+    // in ra file
+    public void dictionaryExportToFile() {
+        try {
+            FileOutputStream fo = new FileOutputStream(FILE_NAME);
+            PrintWriter out = new PrintWriter(fo);
+            for (int i = 0; i < dictionary.words.size(); i++) {
+                out.println(dictionary.words.get(i).word_target
+                        + "\t" + dictionary.words.get(i).word_explain);
+            }
+            out.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // tìm từ
     public String dictionaryLookup(String searchWord) {
-        String foundWord = searchWord;
         String explain = "";
-        for (int i = 0; i < addWord.words.size(); i++) {
-            if (foundWord.equals(addWord.words.get(i).word_target)) {
-                explain = addWord.words.get(i).word_explain;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (searchWord.equals(dictionary.words.get(i).word_target)) {
+                explain += dictionary.words.get(i).word_explain;
                 break;
             }
         }
         return explain;
     }
 
-    public void dictionaryDelete() {
-        String deletedWord = scanner.nextLine();
-
+    // xóa từ
+    public void dictionaryDelete(String s) {
+        String deletedWord = s;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (deletedWord.equals(dictionary.words.get(i).word_target)) {
+                dictionary.words.remove(i);
+                break;
+            }
+        }
     }
 
+    // thêm từ mới
     public void dictionaryAddNewWord() {
+        String addedWord = scanner.nextLine();
+        //boolean check = true;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (addedWord.equals(dictionary.words.get(i).word_target)) {
+                notAdd = false;
+            }
+        }
 
+        if (notAdd) {
+            String addedWordMean = scanner.nextLine();
+            dictionary.words.add(new Word(addedWord, addedWordMean));
+        } else return;
     }
-
-    public static void main(String[] args) {
-
-    }
-
 }

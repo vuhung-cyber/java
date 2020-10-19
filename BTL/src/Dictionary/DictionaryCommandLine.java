@@ -1,44 +1,54 @@
 package Dictionary;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class DictionaryCommandLine {
+    DictionaryManagement dicManage = new DictionaryManagement();
+    public boolean helpToSearching = true;
 
-    public DictionaryManagement size = new DictionaryManagement();
-
+    // in ra màn hình
     public void showAllWords() {
         System.out.printf("No\t| English\t| Vietnamese\n");
-        for (int i = 0; i < size.addWord.words.size(); i++) {
-            System.out.printf("%d\t| %s\t\t| %s\n", i+1, size.addWord.words.get(i).word_target,
-                    size.addWord.words.get(i).word_explain);
+        for (int i = 0; i < dicManage.dictionary.words.size(); i++) {
+            System.out.printf("%d\t| %s\t\t| %s\n", i+1, dicManage.dictionary.words.get(i).word_target,
+                    dicManage.dictionary.words.get(i).word_explain);
         }
     }
 
-    public void dictionaryAdvanced() throws IOException {
-        size.insertFromFile();
+    // in từ bàn phím
+    public void dictionaryBasic() {
+        dicManage.insertFromCommandline();
         showAllWords();
-        //size.dictionaryLookup();
     }
 
-    public ArrayList<String> dictionaryLookuping(String s){
+    // in từ bàn file
+    public void dictionaryAdvanced() throws IOException {
+        dicManage.insertFromFile();
+        showAllWords();
+        //dicManage.dictionaryLookup();
+        //dicManage.dictionaryAddNewWord();
+        dicManage.dictionaryExportToFile();
+
+    }
+
+    // tìm bằng chữ cái đầu
+    public ArrayList<String> dictionarySearcher(String s) {
         String str = s.trim().toLowerCase();
-        int m = Dictionary.words.size();
-        ArrayList<String> a = new ArrayList<String>();
-        for(int i=0; i<m; i++) {
-            String st = Dictionary.words.get(i).word_target;
-            if(st.contains(str) && st.charAt(0) == str.charAt(0))
-                a.add(st);
+        int number = dicManage.dictionary.words.size();
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (int i = 0; i < number; i++) {
+            String st = dicManage.dictionary.words.get(i).word_target;
+            if (st.contains(str) && st.charAt(0) == str.charAt(0))
+                result.add(st);
         }
-        return a;
+        return result;
     }
 
     public static void main(String[] args) throws IOException {
-        DictionaryCommandLine thu_vien = new DictionaryCommandLine();
-        thu_vien.size.insertFromFile();
-        thu_vien.size.dictionaryLookup("house");
-        //thu_vien.dictionaryAdvanced();
+        DictionaryCommandLine library = new DictionaryCommandLine();
+        //library.dictionaryBasic();
+        library.dictionaryAdvanced();
+        //library.dictionarySearcher();
     }
-
 }

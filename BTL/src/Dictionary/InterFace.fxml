@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?scenebuilder-background-color 0x99c2ffff?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Main">
+<AnchorPane prefHeight="659.0" prefWidth="704.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Main">
   <children>
-    <Button fx:id="buttonSearch" layoutX="500.0" layoutY="1.0" mnemonicParsing="false" onAction="#pressSearch" prefHeight="60.0" prefWidth="100.0" text="Search" />
-    <ListView fx:id="listView" layoutX="0.0" layoutY="61.0" prefHeight="539.0000999999975" prefWidth="201.0" />
-    <TextArea fx:id="textSearch" layoutX="0.0" layoutY="0.0" onKeyPressed="#searching" prefHeight="59.0" prefWidth="490.0000999999975" promptText="Search..." wrapText="true" />
-    <Label fx:id="label" layoutX="211.0" layoutY="60.0" prefHeight="535.0" prefWidth="389.0" text="" />
+    <Button fx:id="buttonSearch" layoutX="580.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressSearch" prefHeight="50.0" prefWidth="105.0" text="Search">
+      <font>
+        <Font name="Bell MT Bold" size="22.0" />
+      </font>
+    </Button>
+    <ListView fx:id="wordView" layoutX="14.0" layoutY="82.0" prefHeight="563.0" prefWidth="301.0" />
+    <TextField fx:id="textSearch" layoutX="14.0" layoutY="14.0" onKeyPressed="#searching" prefHeight="50.0" prefWidth="555.0" />
+    <Label fx:id="label" layoutX="324.0" layoutY="82.0" prefHeight="59.0" prefWidth="361.0" text="" />
+    <Button fx:id="add" layoutX="352.0" layoutY="606.0" mnemonicParsing="false" prefHeight="38.999900000002526" prefWidth="82.0" text="Add">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Button>
+    <Button fx:id="delete" layoutX="479.0" layoutY="606.0" mnemonicParsing="false" onAction="#setButtonDelete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
+    <Button fx:id="change" layoutX="603.0" layoutY="606.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="82.0" text="Change" />
   </children>
 </AnchorPane>
