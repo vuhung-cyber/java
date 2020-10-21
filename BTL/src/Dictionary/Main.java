@@ -1,5 +1,6 @@
 package Dictionary;
 
+import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,6 +46,12 @@ public class Main extends Application implements Initializable {
     @FXML
     private Button change = new Button();
 
+    @FXML
+    private TextField workChange = new TextField();
+
+    @FXML
+    private Button ok = new Button();
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         app.dicManage.insertFromFile();
@@ -77,6 +84,28 @@ public class Main extends Application implements Initializable {
             list.add(app.dicManage.dictionary.words.get(i).word_target);
         }
         wordView.getItems().addAll(list);
+    }
+
+    @FXML
+    void pressChange() {
+        workChange.setVisible(true);
+        ok.setVisible(true);
+    }
+
+    @FXML
+    void pressOk() {
+        String searchWord = textSearch.getText();
+        String explain = workChange.getText();
+        for (int i = 0; i < app.dicManage.dictionary.words.size(); i++) {
+            if (searchWord.equals(app.dicManage.dictionary.words.get(i).word_target)) {
+                app.dicManage.dictionary.words.get(i).word_explain = explain;
+                break;
+            }
+        }
+        label.setText(explain);
+        app.dicManage.dictionaryExportToFile();
+        workChange.setVisible(false);
+        ok.setVisible(false);
     }
 
     @FXML
@@ -120,24 +149,12 @@ public class Main extends Application implements Initializable {
 
     @FXML
     void getSelection() {
-        //wordView.getSelectionModel().getSelectedItem();
-        wordView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("ListView selection changed from oldValue = "
-                        + oldValue + " to newValue = " + newValue);
-                String wordSearchFromList = newValue;
-                String wordFoundFromSearch = app.dicManage.dictionaryLookup(wordSearchFromList);
-                showText(wordFoundFromSearch);
-                //textSearch.setText(newValue);
-            }
-        });
+        textSearch.setText(wordView.getSelectionModel().getSelectedItem());
+        if (textSearch.getText() != null) {
+            String wordSearchFromList = textSearch.getText();
+            String wordFoundFromSearch = app.dicManage.dictionaryLookup(wordSearchFromList);
+            showText(wordFoundFromSearch);
+        }
     }
-
-
-    @FXML
-    void setButtonDelete() {
-        String wordSearch = textSearch.getText();
-        app.dicManage.dictionaryDelete(wordSearch);
-    }
+    
 }

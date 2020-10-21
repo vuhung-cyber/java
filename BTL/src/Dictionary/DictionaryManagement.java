@@ -50,7 +50,6 @@ public class DictionaryManagement {
                         + "\t" + dictionary.words.get(i).word_explain);
             }
             out.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -62,10 +61,10 @@ public class DictionaryManagement {
         for (int i = 0; i < dictionary.words.size(); i++) {
             if (searchWord.equals(dictionary.words.get(i).word_target)) {
                 explain += dictionary.words.get(i).word_explain;
-                break;
+                return explain;
             }
         }
-        return explain;
+        return "Not found";
     }
 
     // xóa từ

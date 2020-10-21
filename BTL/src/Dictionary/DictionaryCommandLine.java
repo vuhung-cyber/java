@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DictionaryCommandLine {
     DictionaryManagement dicManage = new DictionaryManagement();
-    public boolean helpToSearching = true;
+    //public boolean helpToSearching = true;
 
     // in ra màn hình
     public void showAllWords() {
@@ -13,12 +13,6 @@ public class DictionaryCommandLine {
             System.out.printf("%d\t| %s\t\t| %s\n", i+1, dicManage.dictionary.words.get(i).word_target,
                     dicManage.dictionary.words.get(i).word_explain);
         }
-    }
-
-    // in từ bàn phím
-    public void dictionaryBasic() {
-        dicManage.insertFromCommandline();
-        showAllWords();
     }
 
     // in từ bàn file

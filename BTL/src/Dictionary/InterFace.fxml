@@ -6,22 +6,24 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-background-color 0x99c2ffff?>
 
-<AnchorPane prefHeight="659.0" prefWidth="704.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Main">
+<AnchorPane id="ok" prefHeight="659.0" prefWidth="704.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Main">
   <children>
     <Button fx:id="buttonSearch" layoutX="580.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressSearch" prefHeight="50.0" prefWidth="105.0" text="Search">
       <font>
         <Font name="Bell MT Bold" size="22.0" />
       </font>
     </Button>
-    <ListView fx:id="wordView" layoutX="14.0" layoutY="82.0" prefHeight="563.0" prefWidth="301.0" />
-    <TextField fx:id="textSearch" layoutX="14.0" layoutY="14.0" onKeyPressed="#searching" prefHeight="50.0" prefWidth="555.0" />
+    <ListView fx:id="wordView" layoutX="14.0" layoutY="82.0" onMouseClicked="#getSelection" prefHeight="563.0" prefWidth="301.0" />
+    <TextField fx:id="textSearch" editable="true" layoutX="14.0" layoutY="14.0" onKeyPressed="#searching" prefHeight="50.0" prefWidth="555.0" />
     <Label fx:id="label" layoutX="324.0" layoutY="82.0" prefHeight="59.0" prefWidth="361.0" text="" />
     <Button fx:id="add" layoutX="352.0" layoutY="606.0" mnemonicParsing="false" prefHeight="38.999900000002526" prefWidth="82.0" text="Add">
       <font>
         <Font size="15.0" />
       </font>
     </Button>
-    <Button fx:id="delete" layoutX="479.0" layoutY="606.0" mnemonicParsing="false" onAction="#setButtonDelete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
-    <Button fx:id="change" layoutX="603.0" layoutY="606.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="82.0" text="Change" />
+    <Button fx:id="delete" layoutX="479.0" layoutY="606.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="82.0" text="Delete" />
+    <Button fx:id="change" layoutX="592.0" layoutY="606.0" mnemonicParsing="false" onAction="#pressChange" prefHeight="39.0" prefWidth="82.0" text="Change" />
+    <TextField fx:id="workChange" layoutX="352.0" layoutY="529.0" prefHeight="50.0" prefWidth="301.0" visible="false" />
+    <Button fx:id="ok" layoutX="660.0" layoutY="529.0" mnemonicParsing="false" onAction="#pressOk" prefHeight="50.0" prefWidth="44.0" text="ok" visible="false" />
   </children>
 </AnchorPane>
