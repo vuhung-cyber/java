@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-stylesheet main.css?>
+<?scenebuilder-background-color 0x66ffc8ff?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="659.0" prefWidth="704.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Dictionary.Controller">
+  <TabPane id="tabPane" prefHeight="659.0" prefWidth="704.0" tabClosingPolicy="UNAVAILABLE">
+    <Tab id="" text="Dictionary">
+      <AnchorPane id="tabAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <ListView fx:id="wordView" layoutX="21.0" layoutY="77.0" onMouseClicked="#getSelection" prefHeight="516.0" prefWidth="287.0" />
+        <TextField fx:id="textSearch" layoutX="21.0" layoutY="14.0" onKeyPressed="#searching" prefHeight="46.0" prefWidth="547.0" />
+        <Button id="tabAnchorPane" fx:id="add" layoutX="347.0" layoutY="521.0" minHeight="55.0" minWidth="41.0" mnemonicParsing="false" onAction="#setButtonAdd" pickOnBounds="false" prefHeight="55.0" prefWidth="57.999908447265625" textOverrun="CLIP">
+          <font>
+            <Font name="Bell MT Bold" size="22.0" fx:id="x2" />
+          </font>
+          <graphic>
+            <ImageView id="Add.png" fitHeight="56.00000762939453" fitWidth="58.000099182128906">
+              <Image url="@images/Add.png" preserveRatio="true" smooth="true" />
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button id="tabAnchorPane" fx:id="change" font="$x2" layoutX="522.0" layoutY="520.0" minHeight="39.0" minWidth="58.0" mnemonicParsing="false" onAction="#pressChange" prefHeight="56.0" prefWidth="58.0">
+          <graphic>
+            <ImageView id="setting.png" fitHeight="55.00001525878906" fitWidth="57.99988555908203">
+              <Image url="@images/setting.png" preserveRatio="true" smooth="true" />
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button id="tabAnchorPane" fx:id="delete" font="$x2" layoutX="436.0" layoutY="520.0" minHeight="56.0" minWidth="46.0" mnemonicParsing="false" onAction="#setButtonDelete" prefHeight="56.0" prefWidth="58.0">
+          <graphic>
+            <ImageView id="rubbish.png" fitHeight="60.99999237060547" fitWidth="68.00000762939453">
+              <Image url="@images/rubbish.png" preserveRatio="true" smooth="true" />
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button id="tabAnchorPane" fx:id="sound" layoutX="339.0" layoutY="90.0" minHeight="55.0" minWidth="58.0" mnemonicParsing="false" onAction="#setButtonSound" prefHeight="61.0" prefWidth="70.9998779296875">
+          <graphic>
+            <ImageView id="sound.png" fitHeight="64.0" fitWidth="72.9999008178711">
+              <Image url="@images/sound.png" preserveRatio="true" smooth="true" />
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button id="tabAnchorPane" fx:id="F_add" font="$x2" layoutX="612.0" layoutY="521.0" minHeight="55.0" minWidth="58.0" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="55.0" prefWidth="58.0">
+          <graphic>
+            <ImageView id="love.png" fitHeight="56.0" fitWidth="58.00011444091797">
+              <Image url="@images/love.png" preserveRatio="true" smooth="true" />
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button fx:id="buttonSearch" font="$x2" layoutX="580.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressSearch" prefHeight="46.0" prefWidth="105.0" text="Search" />
+        <Label fx:id="label" layoutX="347.0" layoutY="184.0" prefHeight="46.0" prefWidth="338.0" textAlignment="CENTER">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+        <Label layoutX="337.0" layoutY="311.0" prefHeight="39.0" prefWidth="68.0" text="Word:">
+          <font>
+            <Font name="System Bold" size="20.0" fx:id="x1" />
+          </font>
+        </Label>
+        <TextField fx:id="wordAdd" layoutX="405.0" layoutY="307.0" prefHeight="46.0" prefWidth="280.0" />
+        <TextField id="workChange" fx:id="wordChange" layoutX="405.0" layoutY="436.0" prefHeight="46.0" prefWidth="280.0" />
+        <TextField fx:id="wordMean" layoutX="405.0" layoutY="372.0" prefHeight="46.0" prefWidth="280.0" />
+        <Label font="$x1" layoutX="337.0" layoutY="376.0" prefHeight="39.0" prefWidth="68.0" text="Mean:" />
+        <Label font="$x1" layoutX="321.0" layoutY="436.0" minHeight="14.9998779296875" prefHeight="39.0" prefWidth="89.0" text="Change:" />
+      </AnchorPane>
+    </Tab>
+    <Tab id="" text="Favourite List">
+      <AnchorPane id="tabAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <ListView fx:id="F_Word" layoutX="21.0" layoutY="21.0" prefHeight="576.0" prefWidth="278.0" />
+        <ListView fx:id="F_Mean" layoutX="317.0" layoutY="21.0" prefHeight="576.0" prefWidth="366.0" />
+      </AnchorPane>
+    </Tab>
+  </TabPane>
+</AnchorPane>
