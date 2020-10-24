@@ -9,11 +9,12 @@ import java.util.Scanner;
 
 public class DictionaryManagement {
     Scanner scanner = new Scanner(System.in);
+    Dictionary dictionary = new Dictionary();
 
     static int sizeOfDictionary = 0;
-    static boolean checkIfExist = false;
-
+    static boolean notAdd = true;
     private final static String FILE_NAME = "Dictionary.txt";
+
 
     // đọc từ bàn phím
     public void insertFromCommandline() {
@@ -21,7 +22,7 @@ public class DictionaryManagement {
         sizeOfDictionary = scanner.nextInt();
         scanner.nextLine();
         for (int i = 0; i < sizeOfDictionary; i++) {
-            Dictionary.words.add(new Word(scanner.nextLine(), scanner.nextLine()));
+            dictionary.words.add(new Word(scanner.nextLine(), scanner.nextLine()));
         }
     }
 
@@ -32,7 +33,7 @@ public class DictionaryManagement {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 String[] parts = str.split("\t");
-                Dictionary.words.add(new Word(parts[0], parts[1]));
+                dictionary.words.add(new Word(parts[0], parts[1]));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +45,11 @@ public class DictionaryManagement {
         try {
             FileOutputStream fo = new FileOutputStream(FILE_NAME);
             PrintWriter out = new PrintWriter(fo);
-            for (int i = 0; i < Dictionary.words.size(); i++) {
-                out.println(Dictionary.words.get(i).word_target
-                        + "\t" + Dictionary.words.get(i).word_explain);
+            for (int i = 0; i < dictionary.words.size(); i++) {
+                out.println(dictionary.words.get(i).word_target
+                        + "\t" + dictionary.words.get(i).word_explain);
             }
             out.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,38 +58,39 @@ public class DictionaryManagement {
     // tìm từ
     public String dictionaryLookup(String searchWord) {
         String explain = "";
-        for (int i = 0; i < Dictionary.words.size(); i++) {
-            if (searchWord.equals(Dictionary.words.get(i).word_target)) {
-                explain += Dictionary.words.get(i).word_explain;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (searchWord.equals(dictionary.words.get(i).word_target)) {
+                explain += dictionary.words.get(i).word_explain;
                 return explain;
             }
         }
-        return "Not Found";
+        return "Not found";
     }
 
     // xóa từ
-    public void dictionaryDelete(String deletedWord) {
-        for (int i = 0; i < Dictionary.words.size(); i++) {
-            if (deletedWord.equals(Dictionary.words.get(i).word_target)) {
-                Dictionary.words.remove(i);
+    public void dictionaryDelete(String s) {
+        String deletedWord = s;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (deletedWord.equals(dictionary.words.get(i).word_target)) {
+                dictionary.words.remove(i);
                 break;
             }
         }
     }
 
     // thêm từ mới
-    public void dictionaryAddNewWord(String addedWord, String addedWordMean) {
-        Dictionary.words.add(new Word(addedWord, addedWordMean));
-    }
-
-    // kiểm tra nếu từ có trong file
-    public boolean isExist(String s) {
-        for (int i = 0; i < Dictionary.words.size(); i++) {
-            if (s.equals(Dictionary.words.get(i).word_target)) {
-                checkIfExist = true;
-                break;
+    public void dictionaryAddNewWord() {
+        String addedWord = scanner.nextLine();
+        //boolean check = true;
+        for (int i = 0; i < dictionary.words.size(); i++) {
+            if (addedWord.equals(dictionary.words.get(i).word_target)) {
+                notAdd = false;
             }
         }
-        return checkIfExist;
+
+        if (notAdd) {
+            String addedWordMean = scanner.nextLine();
+            dictionary.words.add(new Word(addedWord, addedWordMean));
+        } else return;
     }
 }
