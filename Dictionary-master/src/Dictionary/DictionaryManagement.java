@@ -12,7 +12,6 @@ public class DictionaryManagement {
     Dictionary newDictionary = new Dictionary();
 
     static int sizeOfDictionary = 0;
-    static boolean checkIfExist = false;
 
     private final static String FILE_NAME = "Dictionary.txt";
 
@@ -86,6 +85,7 @@ public class DictionaryManagement {
 
     // kiểm tra nếu từ có trong file
     public boolean isExist(String s) {
+        static boolean checkIfExist = false;
         for (int i = 0; i < Dictionary.words.size(); i++) {
             if (s.equals(Dictionary.words.get(i).word_target)) {
                 checkIfExist = true;
