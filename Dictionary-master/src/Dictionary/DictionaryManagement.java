@@ -85,7 +85,7 @@ public class DictionaryManagement {
 
     // kiểm tra nếu từ có trong file
     public boolean isExist(String s) {
-        static boolean checkIfExist = false;
+        boolean checkIfExist = false;
         for (int i = 0; i < Dictionary.words.size(); i++) {
             if (s.equals(Dictionary.words.get(i).word_target)) {
                 checkIfExist = true;
